@@ -95,15 +95,80 @@ Biological Interpretation
 | Functional Annotation | Python (MyGene.info API) |
 | Functional Enrichment | g:Profiler |
 
-## Key Results
+## Analysis Summary
 
-| Analysis | Result |
-|----------|--------|
-| Samples Analysed | 6 RNA-seq samples (3 ER+, 3 TNBC) |
-| Read Alignment | ~91% overall alignment rate (HISAT2) |
-| Differential Expression | 25,702 differentially expressed genes (DEGs) |
-| Filtering Criteria | padj < 0.05 and log₂FC ≥ 1 or ≤ -1 |
-| Differential Expression_Filtered | 4,042 differentially expressed genes (DEGs) |
-| Gene Annotation | annotateMyIDs (Galaxy) + MyGene.info (Python) |
-| Functional Enrichment | GO, KEGG, Reactome and WikiPathways (g:Profiler) |
+| Step | Outcome |
+|------|---------|
+| RNA-seq samples analysed | 6 (3 ER+, 3 TNBC) |
+| Total genes analysed | 25,702 |
+| Read alignment | ~91% overall alignment rate using HISAT2 |
+| Differentially expressed genes | 3,735 (padj < 0.05; log₂FC ≥ 1 or ≤ -1) |
+| Gene annotation | annotateMyIDs (Galaxy) and MyGene.info (Python) |
+| Functional enrichment | GO, KEGG, Reactome and WikiPathways using g:Profiler |
+
+## Data Visualization
+
+The quality and differential expression analyses were assessed using standard RNA-seq visualizations generated in Galaxy.
+
+- **MultiQC Report** – Summarizes sequencing quality metrics across all samples.
+- **PCA Plot** – Evaluates sample clustering based on global gene expression patterns.
+- **MA Plot** – Displays differential gene expression by comparing log₂ fold changes against mean normalized expression.
+- **Heatmap** – Visualizes expression patterns of differentially expressed genes across samples.
+- **Volcano Plot** – Highlights significantly upregulated and downregulated genes based on statistical significance and fold change.
+
+## Downstream Data Processing
+
+Following differential expression analysis, the annotated DEG table was exported to Microsoft Excel for downstream processing.
+
+The data were further processed by:
+
+- Separating upregulated (log₂FC ≥ 1) and downregulated (log₂FC ≤ -1) genes.
+- Ranking genes based on adjusted p-value (padj).
+- Selecting the Top 20 significantly upregulated and Top 20 significantly downregulated genes.
+- Automating functional annotation of the selected genes using a custom Python script and the MyGene.info API.
+- Performing functional enrichment analysis using g:Profiler.
+
+## Top Differentially Expressed Genes
+
+The analysis identified several genes that clearly distinguished ER-positive and TNBC samples. The Top 20 significantly upregulated and Top 20 significantly downregulated genes were selected based on adjusted p-value and log₂ fold change for further functional analysis.
+
+Gene-level annotation helps us to understand the known biological role of each differentially expressed gene
+
+**Note:** 1) The complete annotated Top 20 upregulated and Top 20 downregulated gene lists, including gene summaries, GO annotations and identifier mappings, are provided in the annotated Excel workbook located in the **results/** directory. 
+
+2) A small number of entries in the Top20 tables show "NA" for GeneSymbol/GeneName, as the corresponding Entrez ID could not be resolved during the Galaxy annotateMyIDs step.
+
+  ## Biological Findings
+
+The functional enrichment analysis highlighted distinct molecular characteristics between the two breast cancer subtypes.
+
+- **ER-positive breast cancer** showed enrichment of oxidative phosphorylation, the tricarboxylic acid (TCA) cycle, and mitochondrial respiratory pathways, indicating a greater dependence on oxidative metabolism.
+
+- **Triple-Negative Breast Cancer (TNBC)** showed enrichment of immune-related signalling pathways, Fc receptor-mediated immune responses, and Rho GTPase-mediated cytoskeletal remodelling, consistent with its immunogenic and invasive phenotype.
+
+These findings are consistent with published molecular characteristics of ER-positive and TNBC breast cancer.
+
+## Skills Demonstrated
+
+- RNA-seq data analysis using Galaxy Europe
+- Quality control and alignment of sequencing data
+- Differential gene expression analysis using DESeq2
+- Gene annotation and identifier mapping
+- Functional enrichment analysis (GO, KEGG, Reactome and WikiPathways)
+- Python scripting for bioinformatics automation
+- Biological interpretation and scientific data presentation
+
+  ## Repository Structure
+
+```
+├── data/
+├── results/
+├── figures/
+├── scripts/
+└── README.md
+```
+
+## Conclusion
+
+This project demonstrates a complete RNA-seq differential expression analysis workflow, from raw sequencing data to biological interpretation, integrating Galaxy Europe with downstream analysis in Microsoft Excel, Python, and g:Profiler.
 
